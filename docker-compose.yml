@@ -1,0 +1,1 @@
+sudo docker run -i -p 3000:3000 -v ./db:/home/mt/DiceCloud-version-1/app/.meteor/local/db 2159179e2b51
