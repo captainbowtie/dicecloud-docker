@@ -13,4 +13,4 @@ WORKDIR /home/mt/DiceCloud-version-1/app
 RUN echo '{"public": {"environment": "production","disablePatreon":true}}' > meteorSettings.json
 RUN meteor npm install
 
-ENTRYPOINT meteor
+ENTRYPOINT meteor --settings meteorSettings.json
