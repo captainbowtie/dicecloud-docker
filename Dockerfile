@@ -10,6 +10,7 @@ WORKDIR /home/mt
 RUN wget https://github.com/ThaumRystra/DiceCloud/archive/refs/heads/version-1.zip
 RUN unzip version-1.zip
 WORKDIR /home/mt/DiceCloud-version-1/app
+RUN echo '{"public": {"environment": "production","disablePatreon":true}}' > meteorSettings.json
 RUN meteor npm install
 
 ENTRYPOINT meteor
