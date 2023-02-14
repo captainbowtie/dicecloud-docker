@@ -1,1 +1,9 @@
-sudo docker run -i -p 3000:3000 -v ./db:/home/mt/DiceCloud-version-1/app/.meteor/local/db 2159179e2b51
+version: '3'
+services:
+  dicecloud:
+    container_name: dicecloud
+    image: captainbowtie/dicecloud:1.0
+    ports:
+      - '3000:3000'
+    volumes:
+      - './dicecloud/db:/home/mt/DiceCloud-version-1/app/.meteor/local/db'
