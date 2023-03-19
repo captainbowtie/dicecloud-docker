@@ -1,20 +1,22 @@
 version: '3'
 services:
-  dicecloud:
-    container_name: dicecloud
-    image: captainbowtie/dicecloud:1.0
-    ports:
-      - '8333:3000'
-    depends_on:
-      - mongo
-    environment:
-      ROOT_URL: ${APP_ROOT_URL:-http://localhost}
-      MONGO_URL: mongodb://mongo:27017/meteor
-      PORT: 3000
-  mongo:
-    container_name: dicecloud_database
+  dicecloud-db:
+    container_name: dicecloud-db
     image: mongo:latest
     command:
       - --storageEngine=wiredTiger
     volumes:
       - ./dicecloud/data/db:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=meteor
+      - MONGO_INITDB_ROOT_PASSWORD=meteor
+  dicecloud:
+    container_name: dicecloud
+    image: captainbowtie/dicecloud:2.0.0
+    environment:
+      - ROOT_URL=http://localhost:8333
+      - MONGO_URL=mongodb://meteor:meteor@dicecloud-db:27017
+      - NPM_CONFIG_PRODUCTION=true
+      - PROJECT_DIR=app
+    ports:
+      - 8333:3000
