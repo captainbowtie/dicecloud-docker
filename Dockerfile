@@ -7,9 +7,8 @@ RUN apt-get install --quiet --yes unzip
 USER mt
 WORKDIR /home/mt
 
-RUN wget https://github.com/ThaumRystra/DiceCloud/archive/refs/heads/version-1.zip
-RUN unzip version-1.zip
-WORKDIR /home/mt/DiceCloud-version-1/app
+RUN git clone https://github.com/ThaumRystra/DiceCloud dicecloud
+WORKDIR /home/mt/dicecloud/app
 RUN echo '{"public": {"environment": "production","disablePatreon":true}}' > meteorSettings.json
 RUN meteor npm install
 
