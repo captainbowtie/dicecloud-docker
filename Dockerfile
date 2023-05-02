@@ -1,15 +1,32 @@
-FROM meteor/meteor-base:20211013T200759Z_489f5fe
+FROM ubuntu:jammy
 
 USER root
-RUN apt-get update
-RUN apt-get install --quiet --yes unzip
-
+RUN adduser --system mt
 USER mt
 WORKDIR /home/mt
 
+USER root
+RUN apt-get update
+RUN apt-get install --quiet --yes curl
+RUN curl -fsSL https://deb.nodesource.com/setup_14.x | bash -
+RUN apt-get update
+RUN apt-get install --quiet --yes nodejs git
+
+USER mt
+
+RUN curl https://install.meteor.com/ | sh
+
 RUN git clone https://github.com/ThaumRystra/DiceCloud dicecloud
 WORKDIR /home/mt/dicecloud/app
-RUN echo '{"public": {"environment": "production","disablePatreon":true}}' > meteorSettings.json
-RUN meteor npm install
+RUN npm install --production
 
-ENTRYPOINT meteor --settings meteorSettings.json
+ENV PATH=$PATH:/home/mt/.meteor
+
+RUN meteor build --directory ~/dc/ --architecture os.linux.x86_64
+WORKDIR /home/mt/dc/bundle/programs/server && npm install
+WORKDIR /home/mt/dc/bundle
+
+RUN rm -r /home/dicecloud
+
+ENTRYPOINT node main.js
+
