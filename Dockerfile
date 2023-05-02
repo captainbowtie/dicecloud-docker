@@ -26,7 +26,7 @@ RUN meteor build --directory ~/dc/ --architecture os.linux.x86_64
 WORKDIR /home/mt/dc/bundle/programs/server && npm install
 WORKDIR /home/mt/dc/bundle
 
-RUN rm -r /home/dicecloud
+RUN rm -r /home/mt/dicecloud
 
 ENTRYPOINT node main.js
 
