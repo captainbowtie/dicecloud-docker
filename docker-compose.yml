@@ -12,11 +12,13 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=meteor
   dicecloud:
     container_name: dicecloud
-    image: captainbowtie/dicecloud:2.0.0
+    image: captainbowtie/dicecloud:2.1.1
     environment:
-      - ROOT_URL=http://localhost:8333
+      - ROOT_URL=https://localhost:3000
       - MONGO_URL=mongodb://meteor:meteor@dicecloud-db:27017
-      - NPM_CONFIG_PRODUCTION=true
-      - PROJECT_DIR=app
+      - PORT=3000
+      - NODE_ENV=production
+      - METEOR_SETTINGS={"public":{"environment":"production","disablePatreon":true}}
+      - MAIL_URL=smtp://EMAIL:PASSWORD@SERVER:PORT
     ports:
-      - 8333:3000
+      - '3000:3000'
